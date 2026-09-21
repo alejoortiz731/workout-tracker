@@ -1,12 +1,10 @@
 const express = require('express');
-
 const usersRoutes = require('./routes/v1/users.routes');
+const workoutsRoutes = require('./routes/v1/workouts.routes');
 
 const app = express();
-
 const PORT = process.env.PORT || 3000;
 
-// Permite recibir datos en formato JSON
 app.use(express.json());
 
 // Ruta principal
@@ -16,10 +14,10 @@ app.get('/', (req, res) => {
     });
 });
 
-// Rutas de usuarios
+// Rutas versionadas v1
 app.use('/v1/users', usersRoutes);
+app.use('/v1/workouts', workoutsRoutes);
 
-// Iniciar servidor
 app.listen(PORT, () => {
     console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
 });
