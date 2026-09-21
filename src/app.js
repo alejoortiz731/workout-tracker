@@ -1,13 +1,25 @@
-const express = require("express"); // Import express
-const app = express(); // Create an instance of express
-const { port } = require('./config/env'); // Import the port from the env file
+const express = require('express');
 
-// Inicializacion del servidor y primera ruta
-app.get("/", (req, res) => {
-  res.send("Hola mi server en Express");
+const usersRoutes = require('./routes/v1/users.routes');
+
+const app = express();
+
+const PORT = process.env.PORT || 3000;
+
+// Permite recibir datos en formato JSON
+app.use(express.json());
+
+// Ruta principal
+app.get('/', (req, res) => {
+    res.status(200).json({
+        message: 'Workout Tracker API funcionando'
+    });
 });
 
-// Inicio del servidor
-app.listen(port, () => {
-  console.log(`Servidor corriendo en http://localhost:${port}`);
+// Rutas de usuarios
+app.use('/v1/users', usersRoutes);
+
+// Iniciar servidor
+app.listen(PORT, () => {
+    console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
 });
